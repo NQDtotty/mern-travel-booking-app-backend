@@ -1,0 +1,9 @@
+GET http://localhost:4000/getAllTour
+
+###
+
+GET http://localhost:4000/getAllUser
+
+###
+
+GET http://localhost:4000/search/getTourCount
