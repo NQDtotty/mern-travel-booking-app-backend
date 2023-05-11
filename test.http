@@ -6,4 +6,4 @@ GET http://localhost:4000/getAllUser
 
 ###
 
-GET http://localhost:4000/search/getTourCount
+GET http://localhost:4000/api/tour/search/getTourCount
