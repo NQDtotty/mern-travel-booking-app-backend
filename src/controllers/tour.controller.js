@@ -1,6 +1,5 @@
 import Tour from '../models/Tour.js';
 
-// Create new tour
 export const createTour = async (req, res) => {
     const newTour = new Tour(req.body);
     try {
@@ -22,11 +21,10 @@ export const createTour = async (req, res) => {
     }
 }
 
-// Get one tour by ID
 export const getTourById = async (req, res) => {
-    const id = req.params.id;
+    const tourId = req.params.tourId;
     try {
-        const tour = await Tour.findById(id).populate("reviews");
+        const tour = await Tour.findById(tourId).populate("reviews");
         res.status(200).json({
             success: true,
             message: "Successful",
@@ -40,7 +38,6 @@ export const getTourById = async (req, res) => {
     }
 }
 
-// Get all tour
 export const getAllTour = async (req, res) => {
     // For pagination
     const page = parseInt(req.query.page);
@@ -61,12 +58,11 @@ export const getAllTour = async (req, res) => {
     }
 }
 
-// Update a tour by ID
 export const updateTour = async (req, res) => {
-    const id = req.params.id;
+    const tourId = req.params.tourId;
     try {
         const updatedTour = await Tour.findByIdAndUpdate(
-            id,
+            tourId,
             {
                 $set: req.body
             },
@@ -87,11 +83,10 @@ export const updateTour = async (req, res) => {
     }
 }
 
-// Delete a tour by ID
 export const deleteTour = async (req, res) => {
-    const id = req.params.id;
+    const tourId = req.params.tourId;
     try {
-        await Tour.findByIdAndRemove(id)
+        await Tour.findByIdAndRemove(tourId)
         res.status(200).json({
             success: true,
             message: "Successfully deleted"
@@ -104,7 +99,6 @@ export const deleteTour = async (req, res) => {
     }
 }
 
-// Get tour by search
 export const getTourBySearch = async (req, res) => {
     const city = new RegExp(req.query.city, 'i');
     const distance = parseInt(req.query.distance);
@@ -125,7 +119,6 @@ export const getTourBySearch = async (req, res) => {
     }
 }
 
-// Get featured tour
 export const getFeaturedTour = async (req, res) => {
     try {
         const tours = await Tour.find({ featured: true }).populate("reviews").limit(8);
@@ -143,7 +136,6 @@ export const getFeaturedTour = async (req, res) => {
     }
 }
 
-// Get tour counts
 export const getTourCount = async (req, res) => {
     try {
         const tourCount = await Tour.estimatedDocumentCount();

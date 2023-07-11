@@ -1,0 +1,13 @@
+GET http://localhost:4000/tours
+
+###
+
+GET http://localhost:4000/tours/features/featured-tour
+
+###
+
+GET http://localhost:4000/users/
+
+###
+
+GET http://localhost:4000/api/tour/search/getTourCount

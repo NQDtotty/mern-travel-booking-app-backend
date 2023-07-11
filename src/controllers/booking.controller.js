@@ -1,6 +1,5 @@
 import Booking from '../models/Booking.js';
 
-// Create new booking
 export const createBooking = async (req, res) => {
     const newBooking = new Booking(req.body);
     try {
@@ -19,11 +18,10 @@ export const createBooking = async (req, res) => {
     }
 }
 
-// Get booking by ID
 export const getBookingById = async (req, res) => {
-    const id = req.params.id;
+    const bookingId = req.params.bookingId;
     try {
-        const booking = await Booking.findById(id);
+        const booking = await Booking.findById(bookingId);
 
         res.status(200).json({
             success: true,
@@ -38,7 +36,6 @@ export const getBookingById = async (req, res) => {
     }
 }
 
-// Get all booking
 export const getAllBooking = async (req, res) => {
     try {
         const bookings = await Booking.find({})

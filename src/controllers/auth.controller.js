@@ -2,7 +2,6 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-// Register
 export const register = async (req, res) => {
     try {
         // Hashing password
@@ -28,7 +27,6 @@ export const register = async (req, res) => {
     }
 }
 
-// Login
 export const login = async (req, res) => {
     const email = req.body.email;
     try {

@@ -1,6 +1,5 @@
 import User from '../models/User.js';
 
-// Create new user
 export const createUser = async (req, res) => {
     const newUser = new User(req.body);
     try {
@@ -20,11 +19,10 @@ export const createUser = async (req, res) => {
     }
 }
 
-// Get one user by ID
 export const getUserById = async (req, res) => {
-    const id = req.params.id;
+    const userId = req.params.userId;
     try {
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         res.status(200).json({
             success: true,
             message: "Successful",
@@ -38,7 +36,6 @@ export const getUserById = async (req, res) => {
     }
 }
 
-// Get all user
 export const getAllUser = async (req, res) => {
     try {
         const users = await User.find({});
@@ -55,12 +52,11 @@ export const getAllUser = async (req, res) => {
     }
 }
 
-// Update user by ID
 export const updateUser = async (req, res) => {
-    const id = req.params.id;
+    const userId = req.params.userId;
     try {
         const updatedUser = await User.findByIdAndUpdate(
-            id,
+            userId,
             {
                 $set: req.body
             },
@@ -81,11 +77,10 @@ export const updateUser = async (req, res) => {
     }
 }
 
-// Delete a user by ID
 export const deleteUser = async (req, res) => {
-    const id = req.params.id;
+    const userId = req.params.userId;
     try {
-        await User.findByIdAndRemove(id)
+        await User.findByIdAndRemove(userId)
         res.status(200).json({
             success: true,
             message: "Successfully deleted"
