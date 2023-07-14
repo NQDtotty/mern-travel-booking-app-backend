@@ -3,20 +3,19 @@ import Tour from '../models/Tour.js';
 export const createTour = async (req, res) => {
     const newTour = new Tour(req.body);
     try {
-        const savedTour = await newTour.save();
+        await newTour.save();
         res
-            .status(200)
+            .status(201)
             .json({
                 success: true,
-                message: "Successfully created",
-                data: savedTour,
+                message: "Successfully created"
             })
     } catch (error) {
         res
             .status(500)
             .json({
                 success: false,
-                message: "Fail to create. Try again"
+                message: "Failed to create"
             })
     }
 }
@@ -61,7 +60,7 @@ export const getAllTour = async (req, res) => {
 export const updateTour = async (req, res) => {
     const tourId = req.params.tourId;
     try {
-        const updatedTour = await Tour.findByIdAndUpdate(
+        await Tour.findByIdAndUpdate(
             tourId,
             {
                 $set: req.body
@@ -72,13 +71,12 @@ export const updateTour = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "Successfully updated",
-            data: updatedTour
+            message: "Successfully updated"
         })
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Fail to update. Try again",
+            message: "Failed to update",
         })
     }
 }
@@ -94,7 +92,7 @@ export const deleteTour = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Fail to delete. Try again",
+            message: "Failed to delete",
         })
     }
 }
@@ -103,9 +101,10 @@ export const getTourBySearch = async (req, res) => {
     const city = new RegExp(req.query.city, 'i');
     const distance = parseInt(req.query.distance);
     const maxGroupSize = parseInt(req.query.maxGroupSize);
+    const page = parseInt(req.query.page);
 
     try {
-        const tours = await Tour.find({ city, distance: { $gte: distance }, maxGroupSize: { $gte: maxGroupSize } }).populate("reviews");
+        const tours = await Tour.find({ city, distance: { $gte: distance }, maxGroupSize: { $gte: maxGroupSize } }).skip(page * 4).limit(4).populate("reviews");
         res.status(200).json({
             success: true,
             message: "Successful",
@@ -147,7 +146,7 @@ export const getTourCount = async (req, res) => {
     } catch (error) {
         res.status(505).json({
             success: false,
-            message: "Fail to fetch"
+            message: "Failed to fetch"
         })
     }
 }

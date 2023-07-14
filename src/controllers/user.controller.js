@@ -3,18 +3,17 @@ import User from '../models/User.js';
 export const createUser = async (req, res) => {
     const newUser = new User(req.body);
     try {
-        const savedUser = await newUser.save();
-        res.status(200).json({
+        await newUser.save();
+        res.status(201).json({
             success: true,
-            message: "Successfully created",
-            data: savedUser,
+            message: "Successfully created"
         })
     } catch (error) {
         res
             .status(500)
             .json({
                 success: false,
-                message: "Fail to create. Try again"
+                message: "Failed to create"
             })
     }
 }
@@ -55,7 +54,7 @@ export const getAllUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     const userId = req.params.userId;
     try {
-        const updatedUser = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
             userId,
             {
                 $set: req.body
@@ -66,13 +65,12 @@ export const updateUser = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: "Successfully updated",
-            data: updatedUser
+            message: "Successfully updated"
         })
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Fail to update. Try again",
+            message: "Failed to update",
         })
     }
 }
@@ -88,7 +86,7 @@ export const deleteUser = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Fail to delete. Try again",
+            message: "Failed to delete",
         })
     }
 }

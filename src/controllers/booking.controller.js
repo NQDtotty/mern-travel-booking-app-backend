@@ -1,15 +1,21 @@
 import Booking from '../models/Booking.js';
+import { validatePhoneNumber } from '../utils/validate.util.js';
 
 export const createBooking = async (req, res) => {
     const newBooking = new Booking(req.body);
     try {
-        const savedBooking = await newBooking.save();
-
-        res.status(200).json({
-            success: true,
-            message: "Your tour is booked",
-            data: savedBooking
-        })
+        if (validatePhoneNumber(req.body.phone)) {
+            await newBooking.save();
+            res.status(201).json({
+                success: true,
+                message: "Your tour is booked"
+            })
+        } else {
+            res.status(403).json({
+                success: false,
+                message: "Invalid phone number"
+            });
+        }
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -48,7 +54,7 @@ export const getAllBooking = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Internal server error"
+            message: "Failed to book"
         })
     }
 }

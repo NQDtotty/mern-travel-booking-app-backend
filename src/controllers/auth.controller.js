@@ -13,16 +13,15 @@ export const register = async (req, res) => {
             email: req.body.email,
             password: hash
         })
-        const savedUser = await newUser.save();
-        res.status(200).json({
+        await newUser.save();
+        res.status(201).json({
             success: true,
-            message: "Register successfully",
-            data: savedUser
+            message: "Register successfully"
         })
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Fail to register!"
+            message: "Failed to register"
         })
     }
 }
@@ -74,7 +73,7 @@ export const login = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Fail to login"
+            message: "Failed to login"
         })
     }
 }
